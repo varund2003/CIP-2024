@@ -7,11 +7,14 @@ def chat(prompt, size):
     print("Using model path:", model_path)  # Print model path
     command = f"/home/varund2003/work/llama.cpp/build/bin/llama-cli -m \"{model_path}\" -p \"{prompt}\" -n {size} -e"
     
+    print("Running command:", command)  # Log the command being run
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
     
     if result.returncode != 0:
-        print("Error:", result.stderr)
+        print("Error executing command:", result.stderr)  # Print stderr
+        return f"Error executing model: {result.stderr}"  # Return the error message
     return result.stdout
+
 
 if __name__ == "__main__":
     user_input = input("You: ")
